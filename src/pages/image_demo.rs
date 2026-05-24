@@ -68,7 +68,7 @@ impl DelegateWidget for ImageDemo {
 impl ImageDemo {
     /// Creates the [`ImageDemo`] page.
     pub(crate) fn new() -> Box<Self> {
-        let bytes = include_bytes!("../../../lena.png");
+        let bytes = include_bytes!("../../lena.png");
         let source =
             ImageSource::from_encoded(bytes.to_vec()).expect("failed to decode image header");
         let is_tmux = tuie::get_terminal_info()

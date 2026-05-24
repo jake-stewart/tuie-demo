@@ -113,6 +113,8 @@ checksum = "c08606f8c3cbf4ce6ec8e28fb0014a2c086708fe954eaa885384a6165172e7e8"
 [[package]]
 name = "axis2d"
 version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "cf6c17bb125d62090a520cbb06dfe8c371252c8fb22c4588f515d0da4e51c15e"
 dependencies = [
  "num",
  "sign",
@@ -253,6 +255,8 @@ checksum = "613afe47fcd5fac7ccf1db93babcb082c5994d996f20b8b159f2ad1658eb5724"
 [[package]]
 name = "chord_macro"
 version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ccfd700169d3a1973ee55dca8a659b2bde915231ecfbb1296dea2a72666bcdba"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -1783,6 +1787,8 @@ checksum = "0fda2ff0d084019ba4d7c6f371c95d8fd75ce3524c3cb8fb653a3023f6323e64"
 [[package]]
 name = "sign"
 version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "48c0463041449de02f00a4be609a7bf85b7b4d7cb67a8e905aeaac876312b9ab"
 
 [[package]]
 name = "signal-hook"
@@ -2060,6 +2066,8 @@ dependencies = [
 [[package]]
 name = "tuie"
 version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "8ec49a2b9a3fd34e7cf37f85e68474e051b6d65b351fa0ad2f0a4e6ef03a6e30"
 dependencies = [
  "axis2d",
  "base64-simd",
