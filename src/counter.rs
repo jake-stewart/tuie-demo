@@ -69,6 +69,9 @@ impl InputBindings<Text> for NumericBindings {
         let Some(event) = queue.peek() else {
             return InputResult::Rejected;
         };
+        if let Trigger::Key(Key::Tab) = event.chord.trigger {
+            return InputResult::Rejected;
+        }
         if let Trigger::Key(Key::Char(c)) = event.chord.trigger {
             if event.chord.modifiers.modifiers == 0 {
                 if c.is_ascii_digit() {
@@ -303,6 +306,16 @@ impl DelegateWidget for Counter {
                 queue.next();
                 self.adjust(-1);
                 self.select_all_input();
+                InputResult::Handled
+            }
+            chord!(Tab) => {
+                queue.next();
+                tuie::focus_next_tab_order(Sign::Positive);
+                InputResult::Handled
+            }
+            chord!(Shift + Tab) => {
+                queue.next();
+                tuie::focus_next_tab_order(Sign::Negative);
                 InputResult::Handled
             }
             _ => InputResult::Rejected,
