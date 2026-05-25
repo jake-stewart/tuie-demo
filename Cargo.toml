@@ -13,10 +13,10 @@ categories = ["command-line-interface", "gui"]
 gui = ["tuie/gui"]
 
 [dependencies]
-tuie = { version = "0.1.0", features = ["harmonious", "images"] }
+tuie = { version = "0.1", features = ["harmonious", "images"] }
 axis2d = "0.1.0"
 chord_macro = "0.1.0"
 futures = "0.3"
 
 [dev-dependencies]
-tuie = { version = "0.1.0", features = ["harmonious", "images"] }
+tuie = { version = "0.1", features = ["harmonious", "images"] }
