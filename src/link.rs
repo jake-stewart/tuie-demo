@@ -1,7 +1,7 @@
 //! Clickable text link widget.
 
 use std::cell::Cell;
-use std::process::Command;
+use std::process::{Command, Stdio};
 
 use chord_macro::chord;
 use tuie::prelude::*;
@@ -32,7 +32,10 @@ impl Link {
         } else {
             Command::new("xdg-open")
         };
-        cmd.arg(&self.url);
+        cmd.arg(&self.url)
+            .stdin(Stdio::null())
+            .stdout(Stdio::null())
+            .stderr(Stdio::null());
         let _ = cmd.spawn();
     }
 }
