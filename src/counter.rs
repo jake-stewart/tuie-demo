@@ -84,7 +84,7 @@ impl InputBindings<Text> for NumericBindings {
                     if let Ok(v) = simulated.parse::<i32>() {
                         if v < self.min || v > self.max {
                             let clamped = v.clamp(self.min, self.max).to_string();
-                            state.replace_all(text, &clamped);
+                            state.set_content(text, &clamped);
                             queue.next();
                             return InputResult::Handled;
                         }
@@ -271,7 +271,7 @@ impl DelegateWidget for Counter {
         match &event.chord {
             chord!(LeftClick) => {
                 tuie::focus_widget(self.input_id);
-                let mouse_pos = event.mouse_pos;
+                let mouse_pos = event.cell();
                 if let Some(which) = self.hit_test_buttons(mouse_pos) {
                     queue.next();
                     self.set_pressed(Some(which));
@@ -280,7 +280,7 @@ impl DelegateWidget for Counter {
                 InputResult::Rejected
             }
             chord!(LeftRelease) => {
-                let mouse_pos = event.mouse_pos;
+                let mouse_pos = event.cell();
                 queue.next();
                 if let Some(which) = self.pressed {
                     if self.hit_test_buttons(mouse_pos) == Some(which) {
@@ -372,7 +372,7 @@ impl Counter {
                     .bindings(NumericBindings::new)
                     .content("0")
                     .overflow(TextOverflow::VISIBLE)
-                    .align(Align::Middle)
+                    .align(Align::Center)
                     .horizontal_margin(0)
                     .id(&mut input_id),
                 Text::new().content(" >").id(&mut plus_id),

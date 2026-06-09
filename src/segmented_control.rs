@@ -104,7 +104,7 @@ impl Widget for SegmentedControl {
         let pressed = self.pressed.get();
         let base = self.layout.style;
         let accent = theme::get_accent_color();
-        let selected_style = if self.is_focus_chain() {
+        let selected_style = if self.in_focus_chain() {
             Style::new().fg(Color::BLACK).bg(accent).bold()
         } else {
             base.reverse().bold()
@@ -160,7 +160,7 @@ impl Widget for SegmentedControl {
                 }
             }
             chord!(LeftClick) => {
-                if let Some(i) = self.hit_segment(event.mouse_pos) {
+                if let Some(i) = self.hit_segment(event.cell()) {
                     if !self.is_disabled(i) {
                         tuie::focus_widget(self.get_id());
                         self.set_pressed(Some(i));
@@ -170,7 +170,7 @@ impl Widget for SegmentedControl {
             chord!(LeftRelease) => {
                 let pressed = self.pressed.get();
                 self.set_pressed(None);
-                if let Some(i) = self.hit_segment(event.mouse_pos) {
+                if let Some(i) = self.hit_segment(event.cell()) {
                     if pressed == Some(i) {
                         self.select_index(i);
                     }

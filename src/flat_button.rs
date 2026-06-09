@@ -19,21 +19,21 @@ impl FlatButton {
         let base = *self.base_style.get_or_insert_with(|| self.pane.get_style());
         let mut style = base;
         match self.state {
-            WidgetState::None | WidgetState::Hover => {
-                if style.bg.is_none() {
-                    style.bg = Some(self.bg);
-                }
-            }
             WidgetState::Focused | WidgetState::FocusedHover => {
-                style.bg = None;
-                style.fg = Some(theme::get_accent_color());
+                style.set_bg(None);
+                style.set_fg(Some(theme::get_accent_color()));
                 style.set_reverse(true);
             }
             WidgetState::Active => {
-                style.bg = None;
-                style.fg = Some(theme::get_accent_color());
+                style.set_bg(None);
+                style.set_fg(Some(theme::get_accent_color()));
                 style.set_reverse(true);
                 style.set_blend(Some(75));
+            }
+            _ => {
+                if style.get_bg().is_none() {
+                    style.set_bg(Some(self.bg));
+                }
             }
         }
         self.pane.set_style(style);
@@ -57,8 +57,8 @@ impl DelegateWidget for FlatButton {
             chord!(LeftRelease) => {
                 let size = self.get_rect_size();
                 let inside = Axis2D::all(|a| {
-                    event.mouse_pos[a] >= 0
-                        && event.mouse_pos[a] < size[a] as i32
+                    event.cell()[a] >= 0
+                        && event.cell()[a] < size[a] as i32
                 });
                 if inside {
                     tuie::emit(self.get_id(), ClickEvent);
@@ -89,7 +89,7 @@ impl FlatButton {
     pub(crate) fn new() -> Box<Self> {
         Box::new(Self {
             pane: Pane::new(),
-            bg: border::config::get().style.bg.unwrap_or(Color::grey256(5)),
+            bg: border::config::get().style.get_bg().unwrap_or(Color::grey256(5)),
             state: WidgetState::None,
             base_style: None,
         })

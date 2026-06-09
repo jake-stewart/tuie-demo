@@ -26,7 +26,7 @@ pub struct InputDemo {
     overflow_toggle_id: WidgetId<RadioGroup>,
     scrollbars_checkbox_id: WidgetId<Checkbox>,
     cursor_blink_checkbox_id: WidgetId<Checkbox>,
-    expandtabs_checkbox_id: WidgetId<Checkbox>,
+    expand_tabs_checkbox_id: WidgetId<Checkbox>,
     ml_input_id: WidgetId<Input>,
     sl_input_id: WidgetId<Input>,
     inline_input_id: WidgetId<Input>,
@@ -64,8 +64,8 @@ impl DelegateWidget for InputDemo {
             }
         } else if let Some(ChangeEvent(checked)) = event.get_by::<ChangeEvent<bool>>(self.cursor_blink_checkbox_id) {
             tuie::config::update(|c| c.cursor_blink = *checked);
-        } else if let Some(ChangeEvent(checked)) = event.get_by::<ChangeEvent<bool>>(self.expandtabs_checkbox_id) {
-            tuie::config::update(|c| c.expandtabs = *checked);
+        } else if let Some(ChangeEvent(checked)) = event.get_by::<ChangeEvent<bool>>(self.expand_tabs_checkbox_id) {
+            tuie::config::update(|c| c.expand_tabs = *checked);
         } else if let Some(ChangeEvent(value)) = event.get_by::<ChangeEvent<i32>>(self.scrolloff_counter_id) {
             tuie::config::update(|c| c.scrolloff = *value as u16);
         } else if let Some(ChangeEvent(value)) = event.get_by::<ChangeEvent<i32>>(self.tabstop_counter_id) {
@@ -83,7 +83,7 @@ impl InputDemo {
         let mut overflow_toggle_id = WidgetId::EMPTY;
         let mut scrollbars_checkbox_id = WidgetId::EMPTY;
         let mut cursor_blink_checkbox_id = WidgetId::EMPTY;
-        let mut expandtabs_checkbox_id = WidgetId::EMPTY;
+        let mut expand_tabs_checkbox_id = WidgetId::EMPTY;
         let mut ml_input_id = WidgetId::EMPTY;
         let mut sl_input_id = WidgetId::EMPTY;
         let mut inline_input_id = WidgetId::EMPTY;
@@ -162,8 +162,8 @@ impl InputDemo {
                     .max(16)
                     .id(&mut tabstop_counter_id),
                 Checkbox::new(Text::new().content("Expand tabs"))
-                    .checked_if(config.expandtabs)
-                    .id(&mut expandtabs_checkbox_id),
+                    .checked_if(config.expand_tabs)
+                    .id(&mut expand_tabs_checkbox_id),
                 Text::new().content("Appearance".bold()).margin_top(1),
                 Checkbox::new(Text::new().content("Scrollbars"))
                     .checked()
@@ -202,7 +202,7 @@ impl InputDemo {
             overflow_toggle_id,
             scrollbars_checkbox_id,
             cursor_blink_checkbox_id,
-            expandtabs_checkbox_id,
+            expand_tabs_checkbox_id,
             scrolloff_counter_id,
             tabstop_counter_id,
             ml_input_id,

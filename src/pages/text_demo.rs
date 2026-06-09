@@ -160,7 +160,7 @@ pub fn text_demo_page() -> Box<Pane> {
                 .content("drag divider to resize".dim())
                 .center(),
             Split::new(
-                SplitPane::horizontal()
+                SplitPane::new().horizontal()
                     .children([
                         SplitPaneChild::from(alignment_and_style_pane().preferred_width(10)),
                         SplitPaneChild::from(overflow_pane().preferred_width(10)),

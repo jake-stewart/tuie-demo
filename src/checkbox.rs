@@ -63,7 +63,7 @@ impl DelegateWidget for Checkbox {
             chord!(LeftRelease) => {
                 let size = self.get_rect_size();
                 if Axis2D::all(|a| {
-                    event.mouse_pos[a] >= 0 && event.mouse_pos[a] < size[a] as i32
+                    event.cell()[a] >= 0 && event.cell()[a] < size[a] as i32
                 }) {
                     self.toggle();
                 }

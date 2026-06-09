@@ -66,7 +66,7 @@ fn make_intro_card() -> (Box<Pane>, Card) {
         .flex(1)
         .min_width(18)
         .padding(Spacing::balanced(1))
-        .x_place(Place::Middle)
+        .x_place(Place::Center)
         .children([
             Pane::new().flex(2) as Box<dyn Widget>,
             Pane::new().max_width(60).children([
@@ -111,8 +111,8 @@ fn make_card() -> (Box<Pane>, Card) {
     let mut card = Pane::new()
         .vertical()
         .flex(1)
-        .x_place(Place::Middle)
-        .y_place(Place::Middle)
+        .x_place(Place::Center)
+        .y_place(Place::Center)
         .children([dpad]);
 
     if let Some(cell) = card.get_widget_mut(center_cell_id) {
@@ -175,7 +175,7 @@ impl DelegateWidget for SplitDemo {
 
     fn after_on_state_change(&mut self, _state: WidgetState) {
         for card in &self.cards {
-            let focused = tuie::runtime::is_focus_chain(card.pane_id);
+            let focused = tuie::in_focus_chain(card.pane_id);
             if let Some(leaf) = self.split.get_leaf_mut(card.pane_id) {
                 leaf.set_border_style(if focused {
                     theme::get_accent()
@@ -235,7 +235,7 @@ impl SplitDemo {
         let (card_pane, card) = make_intro_card();
 
         let split = Split::new(
-            SplitPane::vertical().children([SplitPaneChild::from(card_pane).title("intro")]),
+            SplitPane::new().children([SplitPaneChild::from(card_pane).title("intro")]),
         )
         .bordered()
         .flex(1);

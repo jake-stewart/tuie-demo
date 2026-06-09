@@ -29,7 +29,7 @@ fn hex_digit(n: u8) -> char {
 }
 
 fn palette_cell(index: u8, label: char, background: bool) -> Box<Text> {
-    let swatch = Color::Base256(index);
+    let swatch = Color::Indexed(index);
     let dark = if (16..=231).contains(&index) {
         let idx = index - 16;
         let r = (idx / 36) % 6;
@@ -180,7 +180,7 @@ fn palette_preview() -> Box<Pane> {
                 ]),
         ])
         .vertical_padding(1)
-        .x_place(Place::Middle)
+        .x_place(Place::Center)
         .x_scroll(Scrollbar::AutoHide)
 }
 
@@ -202,6 +202,6 @@ pub fn harmonious_demo_page() -> Box<dyn Widget> {
         .children([
             palette_preview() as Box<dyn Widget>,
             prose,
-            Link::new("Read more", GIST_URL).x_align(FlexAlign::Middle),
+            Link::new("Read more", GIST_URL).x_align(FlexAlign::Center),
         ])
 }

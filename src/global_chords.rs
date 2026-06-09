@@ -31,14 +31,12 @@ impl DelegateWidget for GlobalChords {
             #[cfg(feature = "gui")]
             chord!(Ctrl + Char('+')) => {
                 queue.next();
-                let cur = tuie::gui::config::get().font_size;
-                tuie::gui::set_font_size((cur + 1.0).min(72.0));
+                tuie::gui::config::update(|cfg| cfg.font_size = (cfg.font_size + 1.0).min(72.0));
             }
             #[cfg(feature = "gui")]
             chord!(Ctrl + Char('-')) => {
                 queue.next();
-                let cur = tuie::gui::config::get().font_size;
-                tuie::gui::set_font_size((cur - 1.0).max(6.0));
+                tuie::gui::config::update(|cfg| cfg.font_size = (cfg.font_size - 1.0).max(6.0));
             }
             chord!(Ctrl + (c | q)) => {
                 queue.next();

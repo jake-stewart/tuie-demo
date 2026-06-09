@@ -2065,9 +2065,9 @@ dependencies = [
 
 [[package]]
 name = "tuie"
-version = "0.1.0"
+version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8ec49a2b9a3fd34e7cf37f85e68474e051b6d65b351fa0ad2f0a4e6ef03a6e30"
+checksum = "30f58c197159e4bdebe934ebba73bc34e003210e74a798dc9f2d6f4ca80c3e28"
 dependencies = [
  "axis2d",
  "base64-simd",

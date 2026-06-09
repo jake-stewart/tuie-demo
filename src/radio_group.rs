@@ -85,7 +85,7 @@ impl Widget for RadioGroup {
         let pressed = self.pressed.get();
         let base = self.layout.style;
         let accent = theme::get_accent_color();
-        let marker_style = if self.is_focus_chain() {
+        let marker_style = if self.in_focus_chain() {
             base.fg(accent).bold()
         } else {
             base.bold()
@@ -138,7 +138,7 @@ impl Widget for RadioGroup {
                 }
             }
             chord!(LeftClick) => {
-                if let Some(i) = self.hit_option(event.mouse_pos) {
+                if let Some(i) = self.hit_option(event.cell()) {
                     tuie::focus_widget(self.get_id());
                     self.set_pressed(Some(i));
                 }
@@ -146,7 +146,7 @@ impl Widget for RadioGroup {
             chord!(LeftRelease) => {
                 let pressed = self.pressed.get();
                 self.set_pressed(None);
-                if let Some(i) = self.hit_option(event.mouse_pos) {
+                if let Some(i) = self.hit_option(event.cell()) {
                     if pressed == Some(i) {
                         self.select_index(i);
                     }

@@ -172,11 +172,11 @@ impl Matrix {
             return None;
         }
         if offset == 0 {
-            return Some(Color::Base256(Self::HEAD_COLOR_INDEX));
+            return Some(Color::Indexed(Self::HEAD_COLOR_INDEX));
         }
         let body_length = snake.body_length as i32;
         if offset <= body_length {
-            return Some(Color::color256(0, 5, 0));
+            return Some(Color::cube256(0, 5, 0));
         }
         let tail_position = offset - body_length;
         let fade_amount = std::cmp::min(5, tail_position - 1);
@@ -184,7 +184,7 @@ impl Matrix {
             return None;
         }
         let g = (5 - fade_amount).max(0) as u8;
-        Some(Color::color256(0, g, 0))
+        Some(Color::cube256(0, g, 0))
     }
 
     fn find_active_snake(&self, x: u16, cell_step: i32) -> Option<&Snake> {

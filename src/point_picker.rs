@@ -89,7 +89,7 @@ impl Widget for PointPicker {
         let size = self.size.get();
         let selected = self.selected.get();
         let pressed = self.pressed.get();
-        let focused = self.is_focus_chain();
+        let focused = self.in_focus_chain();
 
         for row in 0..size.y {
             for col in 0..size.x {
@@ -155,7 +155,7 @@ impl Widget for PointPicker {
                 }
             }
             chord!(LeftClick) => {
-                if let Some(cell) = self.hit_cell(event.mouse_pos) {
+                if let Some(cell) = self.hit_cell(event.cell()) {
                     tuie::focus_widget(self.get_id());
                     self.set_pressed(Some(cell));
                 }
@@ -163,7 +163,7 @@ impl Widget for PointPicker {
             chord!(LeftRelease) => {
                 let pressed = self.pressed.get();
                 self.set_pressed(None);
-                if let Some(cell) = self.hit_cell(event.mouse_pos) {
+                if let Some(cell) = self.hit_cell(event.cell()) {
                     if pressed == Some(cell) {
                         self.select_cell(cell);
                     }

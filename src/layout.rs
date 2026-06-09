@@ -19,7 +19,7 @@ pub fn wrap_scrollable(content: Box<dyn Widget>) -> Box<Pane> {
         .x_scroll(Scrollbar::AutoHide)
         .insets(Spacing::new().top(3))
         .padding(Spacing::balanced(2).top(4))
-        .x_place(Place::Middle)
+        .x_place(Place::Center)
         .flex(1)
 }
 
@@ -82,7 +82,7 @@ impl DemoLayout {
             .flex(1)
             .height(3)
             .horizontal()
-            .x_place(Place::Middle)
+            .x_place(Place::Center)
             .style(Style::new().bg(Color::grey256(5)).blend(95))
             .children([
                 Pane::new()
@@ -95,7 +95,7 @@ impl DemoLayout {
                         Pane::new()
                             .vertical()
                             .flex(1)
-                            .y_place(Place::Middle)
+                            .y_place(Place::Center)
                             .children([
                                 Text::new()
                                     .content(title.bold())

@@ -51,7 +51,7 @@ fn number_cell(index: usize) -> Box<dyn Widget> {
     Pane::new()
         .width(10)
         .style(Style::new().bg(bg))
-        .y_place(Place::Middle)
+        .y_place(Place::Center)
         .children([Text::new().content(styled).center()])
 }
 
@@ -124,7 +124,7 @@ fn number_scroll() -> Box<List> {
     let mut list = List::new()
         .horizontal()
         .min_height(5)
-        .y_place(Place::Middle)
+        .y_place(Place::Center)
         .scroll(Scrollbar::Visible)
         .bordered()
         .padding_top(1)
@@ -158,7 +158,7 @@ fn log_list() -> Box<List> {
 pub fn list_demo_page() -> Box<Pane> {
     let prose = Pane::new()
         .max_width(68)
-        .x_align(FlexAlign::Middle)
+        .x_align(FlexAlign::Center)
         .children([
             Text::new()
                 .content("List is a virtualised scroll container that only builds the visible window of items.")

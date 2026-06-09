@@ -9,7 +9,6 @@ mod counter;
 mod flat_button;
 mod focus_pane;
 mod global_chords;
-mod horizontal_rule;
 mod layout;
 mod link;
 mod matrix;
@@ -84,7 +83,7 @@ impl DemoApp {
             .flex(1)
             .padding(Spacing::balanced(1))
             .children([
-                Pane::new().x_align(FlexAlign::Middle).children([Title::new("Tuie")]) as Box<dyn Widget>,
+                Pane::new().x_align(FlexAlign::Center).children([Title::new("Tuie")]) as Box<dyn Widget>,
                 buttons,
             ]);
 
@@ -113,14 +112,11 @@ impl DelegateWidget for DemoApp {
 }
 
 fn main() -> std::io::Result<std::process::ExitCode> {
-    tuie::config::set(TuiConfig {
-        hover_events: false,
-        ..Default::default()
-    });
+    tuie::config::update(|cfg| cfg.hover_events = false);
 
     #[cfg(feature = "gui")]
     tuie::gui::config::update(|cfg| {
-        cfg.font_family = Some("Iosevka Custom");
+        cfg.font_family = Some(String::from("Iosevka Custom"));
         cfg.title_bar = tuie::gui::TitleBar::Padding;
         cfg.extend_sides = true;
         cfg.extend_header = true;

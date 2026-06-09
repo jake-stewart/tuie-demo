@@ -56,7 +56,7 @@ pub fn get_accent_color() -> Color {
 pub fn set_accent_color(color: Color) {
     ACCENT_COLOR.with(|c| c.set(color));
     ACCENT.with(|c| c.set(Style::new().fg(color)));
-    input::config::update(|cfg| cfg.highlight_style = Style::new().fg(color).reverse());
+    input::config::update(|cfg| cfg.selected_style = Style::new().fg(color).reverse());
 }
 
 /// Sets the global scrollbar thumb glyph.
@@ -120,7 +120,6 @@ pub fn set_color_scheme(index: usize) {
         cfg.light_theme = light;
         cfg.dark_theme = dark;
     });
-    tuie::gui::reapply_theme();
 }
 
 /// Returns the index into [`COLOR_SCHEMES`] matching the active GUI themes.
@@ -135,14 +134,13 @@ pub fn get_color_scheme_index() -> usize {
 
 /// Sets the GUI appearance override.
 #[cfg(feature = "gui")]
-pub fn set_appearance(appearance: Option<ColorScheme>) {
-    tuie::gui::config::update(|cfg| cfg.appearance = appearance);
-    tuie::gui::reapply_theme();
+pub fn set_appearance(color_scheme: Option<ColorScheme>) {
+    tuie::gui::config::update(|cfg| cfg.color_scheme = color_scheme);
 }
 
 /// Returns the index into [`APPEARANCES`] of the current GUI appearance.
 #[cfg(feature = "gui")]
 pub fn get_appearance_index() -> usize {
-    let current = tuie::gui::config::get().appearance;
+    let current = tuie::gui::config::get().color_scheme;
     APPEARANCES.iter().position(|(a, _)| *a == current).unwrap_or(2)
 }

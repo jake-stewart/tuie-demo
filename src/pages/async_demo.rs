@@ -24,7 +24,7 @@ impl TimersPanel {
         let mut title_id = WidgetId::EMPTY;
         let root = Pane::new()
             .horizontal()
-            .y_place(Place::Middle)
+            .y_place(Place::Center)
             .gap(2)
             .children([
                 Text::new()
@@ -35,7 +35,7 @@ impl TimersPanel {
                     .flex(1) as Box<dyn Widget>,
                 Pane::new()
                     .horizontal()
-                    .y_place(Place::Middle)
+                    .y_place(Place::Center)
                     .children([
                         Pane::new()
                             .bordered()
@@ -100,7 +100,7 @@ impl AsyncPanel {
         let mut bar_id = WidgetId::EMPTY;
         let root = Pane::new()
             .horizontal()
-            .y_place(Place::Middle)
+            .y_place(Place::Center)
             .gap(2)
             .children([
                 Text::new()

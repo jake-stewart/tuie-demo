@@ -71,8 +71,8 @@ impl ImageDemo {
         let bytes = include_bytes!("../../lena.png");
         let source =
             ImageSource::from_encoded(bytes.to_vec()).expect("failed to decode image header");
-        let is_tmux = tuie::get_terminal_info()
-            .and_then(|info| info.xtversion)
+        let is_tmux = tuie::get_runtime_info()
+            .xtversion
             .is_some_and(|v| v.starts_with("tmux "));
 
         let mut root = Pane::new()
@@ -90,7 +90,7 @@ impl ImageDemo {
                     .height(16)
                     .max_width(80)
                     .margin_top(1)
-                    .x_align(FlexAlign::Middle),
+                    .x_align(FlexAlign::Center),
             ]);
 
         let force_render_id = if is_tmux {

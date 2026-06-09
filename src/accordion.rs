@@ -130,8 +130,8 @@ impl DelegateWidget for Accordion {
         };
         match &event.chord {
             chord!(LeftClick) => {
-                let clicked_header = event.mouse_pos.y >= 0
-                    && event.mouse_pos.y < Self::HEADER_HEIGHT as i32;
+                let clicked_header = event.cell().y >= 0
+                    && event.cell().y < Self::HEADER_HEIGHT as i32;
                 if clicked_header {
                     if self.expanded {
                         self.close();
@@ -174,7 +174,7 @@ impl Accordion {
                 .gap(1)
                 .style(Style::new().bg(Color::grey256(5)))
                 .horizontal_padding(1)
-                .y_place(Place::Middle)
+                .y_place(Place::Center)
                 .children([
                     Text::new().content(title.to_string()).flex(1),
                     Text::new().content(">").id(&mut chevron_id),

@@ -9,7 +9,6 @@ use crate::segmented_control::SegmentedControl;
 const A_COLOR: Color = Color::BLUE;
 const B_COLOR: Color = Color::GREEN;
 const C_COLOR: Color = Color::YELLOW;
-const D_COLOR: Color = Color::MAGENTA;
 
 const STAGE_BG: Color = Color::grey256(1);
 const BLOCK_BG: Color = Color::grey256(3);
@@ -78,7 +77,7 @@ impl LayoutDemo {
     fn block_pane(letter: &str, color: Color) -> Box<Pane> {
         Pane::new()
             .vertical()
-            .y_place(Place::Middle)
+            .y_place(Place::Center)
             .bordered()
             .border(Border::THICK)
             .border_style(Style::new().fg(color))
@@ -158,7 +157,7 @@ impl LayoutDemo {
                 Pane::new()
                     .horizontal()
                     .gap(3)
-                    .x_place(Place::Middle)
+                    .x_place(Place::Center)
                     .children([
                         Counter::new("A").value(1).min(0).max(5).color(A_COLOR).id(&mut a_counter),
                         Counter::new("B").value(2).min(0).max(5).color(B_COLOR).id(&mut b_counter),
@@ -197,7 +196,7 @@ impl LayoutDemo {
         let chip = |letter: &str, color: Color| -> Box<dyn Widget> {
             Pane::new()
                 .vertical()
-                .y_place(Place::Middle)
+                .y_place(Place::Center)
                 .horizontal_padding(2)
                 .bordered()
                 .border(Border::THICK)
@@ -211,8 +210,8 @@ impl LayoutDemo {
             .horizontal()
             .gap(1)
             .height(15)
-            .x_place(Place::Middle)
-            .y_place(Place::Middle)
+            .x_place(Place::Center)
+            .y_place(Place::Center)
             .style(Style::new().bg(STAGE_BG))
             .children([
                 chip("A", A_COLOR),
@@ -242,14 +241,14 @@ impl LayoutDemo {
                 stage_pane as Box<dyn Widget>,
                 row(
                     "x_place",
-                    SegmentedControl::new(&["Start", "Middle", "End", "Stretch", "Evenly", "Apart"])
+                    SegmentedControl::new(&["Start", "Center", "End", "Stretch", "Evenly", "Apart"])
                         .selected(1)
                         .disabled(3)
                         .id(&mut x_toggle),
                 ),
                 row(
                     "y_place",
-                    SegmentedControl::new(&["Start", "Middle", "End", "Stretch", "Evenly", "Apart"])
+                    SegmentedControl::new(&["Start", "Center", "End", "Stretch", "Evenly", "Apart"])
                         .selected(1)
                         .disabled(4)
                         .disabled(5)
@@ -265,7 +264,7 @@ impl LayoutDemo {
 
         let pane = Self::section(
             "Place",
-            "Each axis places its items independently: Start, Middle, End, Stretch, Evenly, or Apart. x_place always means horizontal position, regardless of orientation. Evenly/Apart are only valid on the main axis; Stretch is only valid on the cross axis.",
+            "Each axis places its items independently: Start, Center, End, Stretch, Evenly, or Apart. x_place always means horizontal position, regardless of orientation. Evenly/Apart are only valid on the main axis; Stretch is only valid on the cross axis.",
             body,
         );
 
@@ -310,7 +309,7 @@ impl LayoutDemo {
 
         let right = Pane::new()
             .vertical()
-            .y_place(Place::Middle)
+            .y_place(Place::Center)
             .flex(1)
             .children([
                 Text::new()
@@ -319,7 +318,7 @@ impl LayoutDemo {
             ]);
 
         let split = Split::new(
-            SplitPane::horizontal()
+            SplitPane::new().horizontal()
                 .children([
                     SplitPaneChild::from(left).border(Border::THICK_DASHED),
                     SplitPaneChild::from(right).border(Border::THICK_DASHED),
@@ -345,7 +344,7 @@ impl LayoutDemo {
 
         let mut inner_content = Pane::new()
             .vertical()
-            .y_place(Place::Middle)
+            .y_place(Place::Center)
             .bordered()
             .border(Border::THICK)
             .border_style(Style::new().fg(C_COLOR))
@@ -354,17 +353,17 @@ impl LayoutDemo {
             .margin(Spacing::balanced(3))
             .children([Text::new().content("Content".fg(C_COLOR).bold()).center()])
             .id(&mut content_id);
-        inner_content.set_x_align(FlexAlign::Middle);
+        inner_content.set_x_align(FlexAlign::Center);
 
         let mut outer_bordered = Pane::new()
             .vertical()
-            .y_place(Place::Middle)
+            .y_place(Place::Center)
             .bordered()
             .border(Border::THICK)
             .border_style(Style::new().fg(A_COLOR))
             .style(Style::new().bg(STAGE_BG))
             .children([inner_content]);
-        outer_bordered.set_x_align(FlexAlign::Middle);
+        outer_bordered.set_x_align(FlexAlign::Center);
 
         let body = Pane::new()
             .vertical()
@@ -373,7 +372,7 @@ impl LayoutDemo {
                 Pane::new()
                     .horizontal()
                     .gap(3)
-                    .x_place(Place::Middle)
+                    .x_place(Place::Center)
                     .children([
                         Counter::new("Padding").value(3).min(0).max(10).id(&mut padding_id),
                         Counter::new("Margin").value(3).min(0).max(10).id(&mut margin_id),
@@ -409,11 +408,11 @@ impl LayoutDemo {
         let chips = |balanced: bool| -> Box<Pane> {
             let mut wrap = Pane::new()
                 .horizontal()
-                .wrap()
+                .wrap(FlexWrap::Greedy)
                 .gap(1)
-                .x_place(Place::Middle);
+                .x_place(Place::Center);
             if balanced {
-                wrap = wrap.balanced();
+                wrap = wrap.wrap(FlexWrap::Balanced);
             }
             for label in labels {
                 wrap = wrap.child(make_chip(label));
@@ -435,7 +434,7 @@ impl LayoutDemo {
         };
 
         let split = Split::new(
-            SplitPane::horizontal()
+            SplitPane::new().horizontal()
                 .children([
                     SplitPaneChild::from(chips(false).preferred_width(10)).border(Border::THICK_DASHED),
                     SplitPaneChild::from(chips(true).preferred_width(10)).border(Border::THICK_DASHED),
@@ -588,7 +587,7 @@ impl LayoutDemo {
             .unwrap_or(0);
         let from_toggle = |idx| match idx {
             0 => Place::Start,
-            1 => Place::Middle,
+            1 => Place::Center,
             2 => Place::End,
             3 => Place::Stretch,
             4 => Place::Evenly,

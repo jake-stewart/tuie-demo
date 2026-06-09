@@ -42,10 +42,10 @@ fn picker_cell(label: &str, picker: Box<PointPicker>) -> Box<Pane> {
         .flex(1)
         .gap(1)
         .children([
-            Pane::new().horizontal().x_place(Place::Middle).children([picker]),
+            Pane::new().horizontal().x_place(Place::Center).children([picker]),
             Text::new()
                 .content(label.fg(Color::grey256(10)))
-                .x_align(FlexAlign::Middle),
+                .x_align(FlexAlign::Center),
         ])
 }
 
@@ -76,14 +76,12 @@ fn point_label(p: Vec2<u16>) -> &'static str {
 fn placement_for(anchor: Vec2<u16>, popup: Vec2<u16>) -> Placement {
     let to_align = |v: u16| match v {
         0 => Align::Start,
-        1 => Align::Middle,
+        1 => Align::Center,
         _ => Align::End,
     };
-    Placement {
-        anchor_point: anchor.map(to_align),
-        popup_point: popup.map(to_align),
-        offset: Vec2::of(0),
-    }
+    Placement::center()
+        .anchor_point(anchor.map(to_align))
+        .popup_point(popup.map(to_align))
 }
 
 fn write_tooltip_body(text: &mut Text, anchor: Vec2<u16>, popup: Vec2<u16>) {
@@ -123,7 +121,7 @@ fn open_modal() {
         }
     });
     popup_id.set(Some(host.get_id().untyped()));
-    tuie::open_popup(Popup::new(host).dismissible(false));
+    tuie::open_popup(Popup::new(host));
 }
 
 /// Interactive popup demo page.
@@ -227,11 +225,11 @@ impl PopupDemo {
                     )
                     .center()
                     .word_wrap()
-                    .max_width(50).x_align(FlexAlign::Middle),
+                    .max_width(50).x_align(FlexAlign::Center),
                 Pane::new()
                     .horizontal()
                     .padding_top(1)
-                    .x_place(Place::Middle)
+                    .x_place(Place::Center)
                     .children([
                         Tooltip::new(
                             Button::new()
@@ -311,7 +309,7 @@ impl PopupDemo {
                             .vertical()
                             .gap(2)
                             .max_width(68)
-                            .x_align(FlexAlign::Middle)
+                            .x_align(FlexAlign::Center)
                             .margin(Spacing::balanced(2))
                             .children([tooltip_section, tracking_section, modal_section]),
                     ]),

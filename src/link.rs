@@ -75,7 +75,7 @@ impl Widget for Link {
         let base = self.layout.style;
         let style = if matches!(self.state.get(), WidgetState::Active) {
             theme::get_accent().apply(base).underline(UnderlineType::Single)
-        } else if self.is_focus_chain() {
+        } else if self.in_focus_chain() {
             theme::get_accent().bold().apply(base).underline(UnderlineType::Single)
         } else {
             base.underline(UnderlineType::Single)
@@ -98,7 +98,7 @@ impl Widget for Link {
             chord!(LeftRelease) => {
                 let size = self.get_rect_size();
                 if Axis2D::all(|a| {
-                    event.mouse_pos[a] >= 0 && event.mouse_pos[a] < size[a] as i32
+                    event.cell()[a] >= 0 && event.cell()[a] < size[a] as i32
                 }) {
                     tuie::focus_widget(self.get_id());
                     self.open_url();

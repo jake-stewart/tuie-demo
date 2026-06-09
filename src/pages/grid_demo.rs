@@ -172,9 +172,9 @@ impl GridDemo {
         let footer_row = 1 + NUM_ROWS as u16;
         let n_rows = footer_row + 1;
 
-        grid.set_columns(vec![
+        grid.set_cols(vec![
             Track::auto(),
-            Track::grow(1),
+            Track::flex(1),
             Track::auto(),
             Track::auto(),
         ]);
@@ -214,7 +214,6 @@ impl GridDemo {
             grid.set_col_style(c, if on { stripe } else { Style::new() });
         }
 
-        drop(grid);
         self.radio_ids = radio_ids;
     }
 
@@ -309,7 +308,7 @@ impl GridDemo {
         );
         let controls = Pane::new()
             .horizontal()
-            .wrap()
+            .wrap(FlexWrap::Greedy)
             .gap(4)
             .child(border_section)
             .child(border_toggles_section)
